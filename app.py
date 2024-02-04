@@ -2,7 +2,7 @@ import streamlit as st
 import pymongo
 import pandas as pd
 
-store = "mongodb+srv://root:admin123@99acres.zjfswgq.mongodb.net/"
+store = URL
 client = pymongo.MongoClient(store)
 db = client["ibapiii"]
 collection = db["ibapi"]

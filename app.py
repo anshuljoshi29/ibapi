@@ -3,7 +3,7 @@ import pymongo
 import pandas as pd
 import os
 
-store = URL
+store = st.secrets["URL"]
 client = pymongo.MongoClient(store)
 db = client["ibapiii"]
 collection = db["ibapi"]

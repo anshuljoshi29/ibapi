@@ -37,10 +37,10 @@ options.add_argument('--disable-gpu')
 options.add_argument('--log-level=3')
 
 
-driver.get("https://ibapi.in/sale_info_home.aspx")
 time.sleep(2)
 def start():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=options)
+    driver.get("https://ibapi.in/sale_info_home.aspx")
     def data_scrap(data_text,img,pdf):
         img_str = ', '.join(img)
         pdf_str = ', '.join(pdf)

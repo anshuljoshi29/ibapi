@@ -1,6 +1,7 @@
 import streamlit as st
 import pymongo
 import pandas as pd
+import os
 
 store = URL
 client = pymongo.MongoClient(store)

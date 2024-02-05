@@ -166,35 +166,61 @@ def start():
         print(e)
     driver.quit()
 
+if st.button('Scrap'):
+    # Call your function when the button is clicked
+    start()
 
+# Function to get distinct options for a given field
+def get_distinct_options(field):
+    pipeline = [
+        {"$match": {field: {"$ne": None}}},
+        {"$group": {"_id": f"${field}"}},
+        {"$sort": {"_id": 1}}
+    ]
+    distinct_options = collection.aggregate(pipeline)
+    options_list = [option["_id"] for option in distinct_options]
+    options_list.insert(0, 'All')
+    return options_list
 
-pipeline = [
-    {"$match": {"Property Sub Type": {"$ne": None}}},
-    {"$group": {"_id": "$Property Sub Type"}},
-    {"$sort": {"_id": 1}}
-]
-distinct_options = collection.aggregate(pipeline)
-options_list = [option["_id"] for option in distinct_options]
-options_list.insert(0, 'All')
+# Streamlit app
+st.title("Ibapi")
 
-st.title("Data Viewer")
+# Select boxes for filtering
+option = st.selectbox('Property subtype?', get_distinct_options("Property Sub Type"))
+st.write('You selected:', option)
 
+option1 = st.selectbox('State?', get_distinct_options("State"))
+st.write('You selected:', option1)
+
+option2 = st.selectbox('City?', get_distinct_options("City"))
+st.write('You selected:', option2)
+
+option3 = st.selectbox('District?', get_distinct_options("District"))
+st.write('You selected:', option3)
+
+option4 = st.selectbox('Bank Name?', get_distinct_options("Bank Name"))
+st.write('You selected:', option4)
+
+# Function to fetch data based on filters
 def fetch_data(query={}):
     cursor = collection.find(query, {"_id": 0}) 
     df = pd.DataFrame(list(cursor))  
     return df
-if st.button('Scrap'):
-    # Call your function when the button is clicked
-    start()
-option = st.selectbox(
-    'How would you like to be contacted?',
-    options_list
-)
-st.write('You selected:', option)
 
-if option == 'All':
-    data = fetch_data()
-else:
-    data = fetch_data({"Property Sub Type": option})
+# Fetch data based on selected filters
+query = {}
+if option != 'All':
+    query["Property Sub Type"] = option
+if option1 != 'All':
+    query["State"] = option1
+if option2 != 'All':
+    query["City"] = option2
+if option3 != 'All':
+    query["District"] = option3
+if option4 != 'All':
+    query["Bank Name"] = option4
 
-st.write(data)
+data = fetch_data(query)
+
+if st.button('Add filter'):
+    st.write(data)

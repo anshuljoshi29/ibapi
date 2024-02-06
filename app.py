@@ -207,8 +207,8 @@ def start():
         except Exception as e:
             print(e)
             driver.quit()
-    except:
-        pass
+    except Exception as e:
+        print("issue:",e)
 
 if st.button('Scrap'):
     # Call your function when the button is clicked

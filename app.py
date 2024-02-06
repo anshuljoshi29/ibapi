@@ -8,7 +8,16 @@ client = pymongo.MongoClient(store)
 db = client["ibapiii"]
 collection = db["ibapi"]
 from selenium import webdriver
-
+import argparse
+import os, sys, time 
+from selenium import webdriver
+import pandas as pd
+from datetime import date
+import pickle
+import pathlib
+import platform
+import warnings
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException,ElementClickInterceptedException
@@ -39,7 +48,33 @@ options.add_argument('--log-level=3')
 
 time.sleep(2)
 def start():
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=options)
+    from selenium.webdriver.chrome.options import Options
+    t1 = time.monotonic() # start timer to calculate elapsed time
+    #########################################################
+    cwd = os.getcwd() # Current Path
+    driver_dir = cwd + "\chromedriver.exe" # chrome driver for running script locally
+    try:
+        path = pathlib.Path(__file__).parent / 'chromedriver.exe' # try to pull chrome driver from local
+    except Exception as e:
+        print(e)
+        path=driver_dir
+    #########################################################
+    warnings.filterwarnings("ignore", category=DeprecationWarning) # ignore selenium 4.x deprecation warnings
+    #########################################################
+    try:
+        if platform.system()=='Windows':
+            options = Options()
+            options.add_argument('--headless')
+            options.add_argument('--log-level=3') # when running locally
+            options.add_argument('--disable-gpu')
+            driver = webdriver.Chrome(path, options=options) # Chrome Driver Windows Path --if running on windows
+        else:                    #if platform is 'Debian/linux'
+            options = Options()
+            options.add_argument('--no-sandbox')
+            options.add_argument('--disable-dev-shm-usage')  
+            options.add_argument('--headless')
+            options.add_argument('--log-level=3')
+            driver = webdriver.Chrome(options=options)
     driver.get("https://ibapi.in/sale_info_home.aspx")
         
     def data_scrap(data_text,img,pdf):

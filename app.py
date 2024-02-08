@@ -14,8 +14,8 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
         .stButton>button {
-            width: 500px; /* Adjust width as needed */
-            height: 15px; /* Adjust height as needed */
+            width: 100px; /* Adjust width as needed */
+            height: 10px; /* Adjust height as needed */
             font-size: 5px; /* Adjust font size as needed */
         }
     </style>

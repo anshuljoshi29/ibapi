@@ -10,17 +10,6 @@ collection = db["ibapiii"]
 # Function to get distinct options for a given field
 st.set_page_config(layout="wide")
 
-# Custom CSS to reduce button size
-st.markdown("""
-    <style>
-        .stButton>button {
-            width: 100px; /* Adjust width as needed */
-            height: 10px; /* Adjust height as needed */
-            font-size: 5px; /* Adjust font size as needed */
-        }
-    </style>
-""", unsafe_allow_html=True)
-
 def get_distinct_options(field):
     pipeline = [
         {"$match": {field: {"$ne": None}}},
@@ -82,7 +71,7 @@ if not data.empty:
     with col4:
         st.write('City')
     with col5:
-        st.write('Button')
+        st.write('Links')
     for index, row in data.iterrows():
         with col1:
             st.write(index)
@@ -90,17 +79,20 @@ if not data.empty:
             st.write(row['State'])
         with col3:
             st.write(row['District'])
+            # district = row['District']
+            # if len(district) > 20:
+            #     st.write(district[:20] + '...')
         with col4:
-            st.write(row['City'])
+            city = row['City']
+            if len(city) > 20:
+                st.write(city[:20] + '...')
+            else:
+                st.write(row['City'])
         with col5:
-            if st.button(f'Button {index}'):
-                img = row['Images']
-                try:
-                    individual_urls = img.split(", ")
-                    for url in individual_urls:
-                        st.image(url, width=200) 
-                except:
-                    st.image(img, width=200)
-
+            img_links = row['Images'].split(", ")
+            st.write(", ".join(f"[Link {i+1}]({img_link})" for i, img_link in enumerate(img_links)))
 else:               
     st.write("No data available for the selected filters.")
+
+
+st.write(data)

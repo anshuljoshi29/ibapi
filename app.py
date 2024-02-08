@@ -8,7 +8,7 @@ client = pymongo.MongoClient(store)
 db = client["ibapiii"]
 collection = db["ibapiii"]
 # Function to get distinct options for a given field
-
+st.set_page_config(layout="wide")
 def get_distinct_options(field):
     pipeline = [
         {"$match": {field: {"$ne": None}}},

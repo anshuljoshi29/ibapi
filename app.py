@@ -73,7 +73,7 @@ if not data.empty:
         st.write('Button')
     for index, row in data.iterrows():
         with col1:
-            st.write(index+" :")
+            st.write(index)
         with col2:
             st.write(row['State'])
         with col3:

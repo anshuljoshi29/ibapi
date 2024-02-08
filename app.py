@@ -9,6 +9,18 @@ db = client["ibapiii"]
 collection = db["ibapiii"]
 # Function to get distinct options for a given field
 st.set_page_config(layout="wide")
+
+# Custom CSS to reduce button size
+st.markdown("""
+    <style>
+        .stButton>button {
+            width: 50px; /* Adjust width as needed */
+            height: 100px; /* Adjust height as needed */
+            font-size: 14px; /* Adjust font size as needed */
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 def get_distinct_options(field):
     pipeline = [
         {"$match": {field: {"$ne": None}}},
@@ -23,15 +35,7 @@ def get_distinct_options(field):
 st.title("Ibapi")
 
 col1, col2, col3, col4 = st.columns(4)
-st.markdown("""
-    <style>
-        .stButton>button {
-            width: 100px; /* Adjust width as needed */
-            height: 10px; /* Adjust height as needed */
-            font-size: 14px; /* Adjust font size as needed */
-        }
-    </style>
-""", unsafe_allow_html=True)
+
 with col1:
     option1 = st.selectbox('State?', get_distinct_options("State"), key='state_selectbox')
     st.write('You selected:', option1)

@@ -23,7 +23,15 @@ def get_distinct_options(field):
 st.title("Ibapi")
 
 col1, col2, col3, col4 = st.columns(4)
-
+st.markdown("""
+    <style>
+        .stButton>button {
+            width: 100px; /* Adjust width as needed */
+            height: 30px; /* Adjust height as needed */
+            font-size: 14px; /* Adjust font size as needed */
+        }
+    </style>
+""", unsafe_allow_html=True)
 with col1:
     option1 = st.selectbox('State?', get_distinct_options("State"), key='state_selectbox')
     st.write('You selected:', option1)

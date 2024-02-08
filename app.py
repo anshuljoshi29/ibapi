@@ -16,7 +16,7 @@ st.markdown("""
         .stButton>button {
             width: 500px; /* Adjust width as needed */
             height: 15px; /* Adjust height as needed */
-            font-size: 7px; /* Adjust font size as needed */
+            font-size: 5px; /* Adjust font size as needed */
         }
     </style>
 """, unsafe_allow_html=True)
